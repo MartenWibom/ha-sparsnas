@@ -1,5 +1,8 @@
 const mqtt = require('mqtt')
-// const mqttrouter = require('mqtt-router')
+const MovingAverage = require('./movingaverage')
+const Cron = require('cron').CronJob
+
+const ma = new MovingAverage()
 
 const TOPIC = {
   INPUT: 'EspSparsnasGateway/valuesV2',
@@ -28,11 +31,24 @@ client.subscribe(TOPIC.INPUT)
 
 client.on('message', (topic, msg) => {
   const evtmsg = JSON.parse(msg.toString())
+  ma.push(evtmsg.watt)
   const hamsg = {
     event: 'sparsnas.power',
     device: 'sparsnas',
     payload: evtmsg
   }
-  console.log('Send to MQTT=', hamsg)
+  client.publish(TOPIC.OUTPUT, JSON.stringify(hamsg))
+})
+
+new Cron('0 0 * * *', () => {
+  const kwh = ma.getAverage()
+  const hamsg = {
+    event: 'sparsnas.kwh',
+    device: 'sparsnas',
+    payload: {
+      kwh
+    }
+  }
+  ma.reset()
   client.publish(TOPIC.OUTPUT, JSON.stringify(hamsg))
 })
