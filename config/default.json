@@ -1,0 +1,7 @@
+{
+  "mqtt": "mqtt://192.168.2.201",
+  "topics": {
+    "input": "EspSparsnasGateway/valuesV2",
+    "output": "ha-evt"
+  }
+}
