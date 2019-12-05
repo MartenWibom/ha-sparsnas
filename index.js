@@ -19,7 +19,6 @@ client.on('message', (topic, msg) => {
 
   // Put every watt measurement for later kWh calculation
   maHH.push(evtmsg.watt)
-  maMM.push(evtmsg.watt)
 
   const hamsg = {
     event: 'sparsnas.power',
