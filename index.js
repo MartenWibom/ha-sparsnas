@@ -31,7 +31,7 @@ client.on('message', (topic, msg) => {
 // Calculate kWh by taking average for a hour and sent it as hourly metric
 new Cron('0 * * * *', () => {
   console.log('Emit hourly kWh metric')
-  const kwh = maHH.getAverage()
+  const kwh = Math.round(maHH.getAverage())
   const hamsg = {
     event: 'sparsnas.kwh',
     device: 'sparsnas',
