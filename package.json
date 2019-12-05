@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.2.4",
     "cron": "^1.7.2",
     "mqtt": "^3.0.0"
   }
