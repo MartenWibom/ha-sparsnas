@@ -25,7 +25,6 @@ const clean = str => {
 }
 
 const client = mqtt.connect(`mqtt://192.168.2.201`)
-// const router = mqttrouter.wrap(client)
 
 client.subscribe(TOPIC.INPUT)
 
@@ -40,7 +39,7 @@ client.on('message', (topic, msg) => {
   client.publish(TOPIC.OUTPUT, JSON.stringify(hamsg))
 })
 
-new Cron('0 0 * * *', () => {
+new Cron('0 * * * *', () => {
   const kwh = ma.getAverage()
   const hamsg = {
     event: 'sparsnas.kwh',
