@@ -23,7 +23,7 @@ client.on('message', (topic, msg) => {
   const hamsg = {
     event: 'sparsnas.power',
     device: 'sparsnas',
-    payload: evtmsg
+    data: evtmsg
   }
   client.publish(topics.output, JSON.stringify(hamsg))
 })
@@ -35,7 +35,7 @@ new Cron('0 * * * *', () => {
   const hamsg = {
     event: 'sparsnas.kwh',
     device: 'sparsnas',
-    payload: {
+    data: {
       kwh
     }
   }
